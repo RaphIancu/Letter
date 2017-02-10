@@ -124,14 +124,22 @@ public class Jeu {
 	
 	public boolean motPossible(String mot) {
 		boolean bool = true;
+		List<Character> lettreARemove = new ArrayList<Character>();
 		
 		for(int i = 0; i < mot.length(); i++) {
 			Character charMot = mot.charAt(i);
 			if(!lettreSurTable.contains(charMot)){
 				System.out.println("Vous pouvez pas faire ce mot avec les lettres disponibles");
 				bool = false;
+				break;
 			} else {
-				lettreSurTable.remove(charMot);
+				lettreARemove.add(charMot);
+			}
+		}
+		
+		if(bool) {
+			for (int j = 0; j < lettreARemove.size(); j++) {
+				lettreSurTable.remove(lettreARemove.get(j));
 			}
 		}
 		return bool;
