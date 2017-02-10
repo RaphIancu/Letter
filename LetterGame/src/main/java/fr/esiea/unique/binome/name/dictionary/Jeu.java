@@ -1,0 +1,125 @@
+package fr.esiea.unique.binome.name.dictionary;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+/**
+ * 
+ * @author Raphael
+ *
+ */
+
+public class Jeu {
+	private Pioche pioche;
+	private List<Character> lettreSurTable;
+	private Joueur j1;
+	private Joueur j2;
+	private Scanner sc;
+	
+	public Jeu() {
+		pioche = new Pioche();
+		lettreSurTable = new ArrayList<Character>();
+		j1 = new Joueur();
+		j2 = new Joueur();
+		sc = new Scanner(System.in);
+	}
+	
+	public void initJeu() {
+		System.out.println("Bienvenu au LettreGame !");
+		System.out.println("---------------------------------------------------------------");
+		initPseudos();
+		quiCommence();
+		
+	}
+	
+	public void initPseudos() {
+		System.out.println("Indiquez le pseudo du joueur 1:");
+		j1.setPseudo(sc.next());
+		System.out.println("Indiquez le pseudo du joueur 2:");
+		j2.setPseudo(sc.next());
+	}
+	
+	public void quiCommence() {
+		System.out.println("-------------------- Le jeu commence -------------------");
+		char letterJ1 = pioche.letterRandom();
+		char letterJ2 = pioche.letterRandom();
+		System.out.println(j1.getPseudo()+" a pioché un :"+letterJ1);
+		System.out.println(j2.getPseudo()+" a pioché un :"+letterJ2);
+		lettreSurTable.add(letterJ1);
+		lettreSurTable.add(letterJ2);
+		if(pioche.meilleurLettre(letterJ1,letterJ2)){
+			System.out.println(j1.getPseudo()+" commence !");
+			actionMenu(j1, j2);
+		}else{
+			System.out.println(j2.getPseudo()+" commence !");
+			actionMenu(j2, j1);
+		}
+	}
+	
+	public void runJeu(Joueur joueur, Joueur joueurAdv) {
+		System.out.println("--------------------------------------------------------");
+		System.out.println("                   Tour du joueur "+joueur.getPseudo());
+		System.out.println("--------------------------------------------------------");
+		System.out.println("Lettres disponibles:"+lettreSurTable);
+		System.out.println("Les mots de votre adversaire: "+joueurAdv.getJoueurMots());
+		System.out.println("Liste de vos mots"+joueur.getJoueurMots());
+	}
+	
+	public void actionMenu(Joueur joueur, Joueur joueurAdv) {
+		runJeu(joueur, joueurAdv);
+		System.out.println("--------------- Que souhaites tu faire? ----------------");
+		System.out.println("[1] Passe ton tour");
+		System.out.println("[2] Faire un mot");
+		System.out.println("[3] Faire un autre mot à partir d'un mot");
+		System.out.println("[4] Abandonner");
+		System.out.println("--------------------------------------------------------");
+
+		String choix = sc.next();
+		if(choix.length() > 0)
+		{
+			switch (choix.charAt(0))
+			{
+			case '1':
+				passe(joueur, joueurAdv);
+				break;
+			case '2':
+				faitUnMot(joueur);
+				break;
+			case '3':
+				faitUnMotAvecUnMot(joueur);
+				break;
+			case '4':
+				abandon(joueur, joueurAdv);
+				break;
+			default:
+				System.out.println("Mauvais choix, recommencez !");
+				actionMenu(joueur, joueurAdv);
+				break;
+			}
+		}
+	}
+	
+	public void passe(Joueur joueur, Joueur joueurAdv) {
+		char l1 = pioche.letterRandom();
+		char l2 = pioche.letterRandom();
+		System.out.println("Vous avez pioché un "+l1+" et un "+l2);
+		lettreSurTable.add(l1);
+		lettreSurTable.add(l2);
+		actionMenu(joueurAdv, joueur);
+	}
+	
+	public void faitUnMot(Joueur joueur) {
+		
+	}
+	
+	public void faitUnMotAvecUnMot(Joueur joueur) {
+		
+	}
+	
+	public void abandon(Joueur joueur, Joueur joueurAdv) {
+		System.out.println(joueur.getPseudo()+" a abandonné, "+joueurAdv.getPseudo()+" a gagné !!!");
+		System.out.println("Merci d'avoir joué, à la prochaine !");
+		System.exit(0);
+	}
+}
