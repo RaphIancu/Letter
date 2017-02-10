@@ -7,7 +7,7 @@
   <version>0.0.0-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>your binome name : Letter Game</name>
+  <name>IANCU-COULON : Letter Game</name>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
