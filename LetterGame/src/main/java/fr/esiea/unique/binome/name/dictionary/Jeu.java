@@ -60,12 +60,20 @@ public class Jeu {
 	}
 	
 	public void runJeu(Joueur joueur, Joueur joueurAdv) {
+		
+		if(joueur.getGagnant()) {
+			System.out.println("Bravo vous avez fait 10 mots !");
+			System.out.println(joueur.getPseudo()+" gagne ! \\o/");
+			System.exit(0);
+		}
+		
 		System.out.println("--------------------------------------------------------");
-		System.out.println("                   Tour du joueur "+joueur.getPseudo());
+		System.out.println("                  Au tour de "+joueur.getPseudo());
 		System.out.println("--------------------------------------------------------");
 		System.out.println("Lettres disponibles:"+lettreSurTable);
 		System.out.println("Les mots de votre adversaire: "+joueurAdv.getJoueurMots());
 		System.out.println("Liste de vos mots"+joueur.getJoueurMots());
+		
 	}
 	
 	public void actionMenu(Joueur joueur, Joueur joueurAdv) {
@@ -111,14 +119,21 @@ public class Jeu {
 		actionMenu(joueurAdv, joueur);
 	}
 	
+	public void pioche() {
+		char l1 = pioche.letterRandom();
+		System.out.println("Vous avez pioché un "+l1);
+		lettreSurTable.add(l1);
+	}
+	
 	public void faitUnMot(Joueur joueur, Joueur joueurAdv) {
 		System.out.println("Entrez votre mot: ");
 		String mot = sc.next();
 		
 		if(dico.motExiste(mot) && motPossible(mot)){
 			joueur.setJoueurMots(mot);
+			testGagnant(joueur);
+			pioche();
 		}
-		
 		actionMenu(joueur, joueurAdv);
 	}
 	
@@ -165,6 +180,14 @@ public class Jeu {
 					joueurAdv.getJoueurMots().remove(motACompleter);
 					joueur.getJoueurMots().add(nouveauMot);
 				}
+				testGagnant(joueur);
+				pioche();
+			} else {
+				for(int i = 0; i < motACompleter.length(); i++) {
+					Character lettre = motACompleter.charAt(i);
+					lettreSurTable.remove(lettre);
+				}
+				System.out.println("C'est le même mot, petit tricheur ;)");
 			}
 		} else {
 			System.out.println("Ce mot n'a pas encore été fait");
@@ -176,5 +199,11 @@ public class Jeu {
 		System.out.println(joueur.getPseudo()+" a abandonné, "+joueurAdv.getPseudo()+" a gagné !!!");
 		System.out.println("Merci d'avoir joué, à la prochaine !");
 		System.exit(0);
+	}
+	
+	public void testGagnant(Joueur joueur) {
+		if(joueur.getJoueurMots().size() >= 10) {
+			joueur.setGagnant(true);
+		}
 	}
 }
