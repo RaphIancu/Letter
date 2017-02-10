@@ -15,7 +15,7 @@ public class Dico {
 	private String path;
 	
 	public Dico(){
-		this.path = "/target/classes/dico.txt";
+		this.path = System.getProperty("user.dir")+"/target/classes/dico.txt";
 	}
 	
 	public Dico(String path) {
