@@ -146,7 +146,30 @@ public class Jeu {
 	}
 	
 	public void faitUnMotAvecUnMot(Joueur joueur, Joueur joueurAdv) {
+		System.out.println("Quel mot souhaitez vous compléter: ");
+		String motACompleter = sc.next();
 		
+		if(joueur.getJoueurMots().contains(motACompleter) || joueurAdv.getJoueurMots().contains(motACompleter)) {
+			for(int i = 0; i < motACompleter.length(); i++) {
+				Character lettre = motACompleter.charAt(i);
+				lettreSurTable.add(lettre);
+			}
+			System.out.println("Quel est votre nouveau mot?");
+			String nouveauMot = sc.next();
+			
+			if(nouveauMot.contains(motACompleter) && motPossible(nouveauMot)) {
+				if(joueur.getJoueurMots().contains(motACompleter)) {
+					joueur.getJoueurMots().remove(motACompleter);
+					joueur.getJoueurMots().add(nouveauMot);
+				} else {
+					joueurAdv.getJoueurMots().remove(motACompleter);
+					joueur.getJoueurMots().add(nouveauMot);
+				}
+			}
+		} else {
+			System.out.println("Ce mot n'a pas encore été fait");
+		}
+		actionMenu(joueur, joueurAdv);
 	}
 	
 	public void abandon(Joueur joueur, Joueur joueurAdv) {
