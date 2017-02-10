@@ -16,6 +16,7 @@ public class Jeu {
 	private Joueur j1;
 	private Joueur j2;
 	private Scanner sc;
+	private Dico dico;
 	
 	public Jeu() {
 		pioche = new Pioche();
@@ -23,6 +24,7 @@ public class Jeu {
 		j1 = new Joueur();
 		j2 = new Joueur();
 		sc = new Scanner(System.in);
+		dico = new Dico();
 	}
 	
 	public void initJeu() {
@@ -84,10 +86,10 @@ public class Jeu {
 				passe(joueur, joueurAdv);
 				break;
 			case '2':
-				faitUnMot(joueur);
+				faitUnMot(joueur, joueurAdv);
 				break;
 			case '3':
-				faitUnMotAvecUnMot(joueur);
+				faitUnMotAvecUnMot(joueur, joueurAdv);
 				break;
 			case '4':
 				abandon(joueur, joueurAdv);
@@ -109,11 +111,33 @@ public class Jeu {
 		actionMenu(joueurAdv, joueur);
 	}
 	
-	public void faitUnMot(Joueur joueur) {
+	public void faitUnMot(Joueur joueur, Joueur joueurAdv) {
+		System.out.println("Entrez votre mot: ");
+		String mot = sc.next();
 		
+		if(dico.motExiste(mot) && motPossible(mot)){
+			joueur.setJoueurMots(mot);
+		}
+		
+		actionMenu(joueur, joueurAdv);
 	}
 	
-	public void faitUnMotAvecUnMot(Joueur joueur) {
+	public boolean motPossible(String mot) {
+		boolean bool = true;
+		
+		for(int i = 0; i < mot.length(); i++) {
+			Character charMot = mot.charAt(i);
+			if(!lettreSurTable.contains(charMot)){
+				System.out.println("Vous pouvez pas faire ce mot avec les lettres disponibles");
+				bool = false;
+			} else {
+				lettreSurTable.remove(charMot);
+			}
+		}
+		return bool;
+	}
+	
+	public void faitUnMotAvecUnMot(Joueur joueur, Joueur joueurAdv) {
 		
 	}
 	
