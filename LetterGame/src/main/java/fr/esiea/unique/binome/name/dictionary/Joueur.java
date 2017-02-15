@@ -13,12 +13,14 @@ public class Joueur {
 	private int nbMot;
 	private LinkedList<String> joueurMots;
 	private boolean gagnant;
+	private boolean isIA;
 	
 	public Joueur() {
 		this.pseudo = "";
 		this.nbMot = 0;
 		this.joueurMots = new LinkedList<String>();
 		this.gagnant = false;
+		this.isIA = false;
 	}
 	
 	public String getPseudo() {
@@ -55,5 +57,13 @@ public class Joueur {
 	
 	public void setGagnant(boolean gagne) {
 		this.gagnant = gagne;
+	}
+	
+	public boolean getIsIA() {
+		return isIA;
+	}
+	
+	public void setIsIA(boolean isIA) {
+		this.isIA = isIA;
 	}
 }
