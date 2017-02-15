@@ -28,7 +28,7 @@ public class Dico {
 			BufferedReader bfReader = new BufferedReader(new FileReader(f)); 	
 			String line;
 			while((line = bfReader.readLine()) != null) { 
-				if(line.contains(mot)) {
+				if(line.contains(mot) && line.equals(mot)) {
 					bfReader.close();
 					return true;
 				}
