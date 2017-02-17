@@ -196,8 +196,14 @@ public class Jeu {
 				aJouer = false;
 				actionMenu(joueurAdv, joueur);
 			} else {
-				passe(joueur, joueurAdv);
-				actionMenu(joueurAdv, joueur);
+				motAvecDeuxMotsIA(joueur, joueurAdv);
+				if(aJouer) {
+					aJouer = false;
+					actionMenu(joueurAdv, joueur);
+				} else {
+					passe(joueur, joueurAdv);
+					actionMenu(joueurAdv, joueur);
+				}
 			}
 		}
 	}
@@ -218,6 +224,15 @@ public class Jeu {
 	 * @param joueurAdv
 	 */
 	private void motAvecUnMotIA(Joueur joueur, Joueur joueurAdv) {
+		
+	}
+	
+	/**
+	 * L'IA fait un mot avec deux mots déjà fait
+	 * @param joueur
+	 * @param joueurAdv
+	 */
+	private void motAvecDeuxMotsIA(Joueur joueur, Joueur joueurAdv) {
 		
 	}
 	
