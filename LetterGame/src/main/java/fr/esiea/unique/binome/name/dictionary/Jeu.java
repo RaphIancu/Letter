@@ -407,4 +407,14 @@ public class Jeu {
 			joueur.setGagnant(true);
 		}
 	}
+	
+	/**
+	 * Récupère les lettresCommunes
+	 * @return
+	 */
+	public List<Character> getLettreSurTable() {
+		return lettreSurTable;
+	}
+	
+	
 }
