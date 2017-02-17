@@ -147,7 +147,8 @@ public class Jeu {
 			System.out.println("[1] Passe ton tour");
 			System.out.println("[2] Faire un mot");
 			System.out.println("[3] Faire un autre mot à partir d'un mot");
-			System.out.println("[4] Abandonner");
+			System.out.println("[4] Faire un autre mot à partir de deux mots");
+			System.out.println("[5] Abandonner");
 			System.out.println("--------------------------------------------------------");
 	
 			String choix = sc.next();
@@ -165,6 +166,9 @@ public class Jeu {
 					faitUnMotAvecUnMot(joueur, joueurAdv);
 					break;
 				case '4':
+					faitUnMotAvecDeuxMot(joueur, joueurAdv);
+					break;
+				case '5':
 					abandon(joueur, joueurAdv);
 					break;
 				default:
@@ -307,13 +311,8 @@ public class Jeu {
 			String nouveauMot = sc.next();
 			
 			if(nouveauMot.contains(motACompleter) && motPossible(nouveauMot)) {
-				if(joueur.getJoueurMots().contains(motACompleter)) {
-					joueur.getJoueurMots().remove(motACompleter);
-					joueur.getJoueurMots().add(nouveauMot);
-				} else {
-					joueurAdv.getJoueurMots().remove(motACompleter);
-					joueur.getJoueurMots().add(nouveauMot);
-				}
+				removeUnMot(joueur, joueurAdv, motACompleter);
+				joueur.getJoueurMots().add(nouveauMot);
 				testGagnant(joueur);
 				pioche();
 			} else {
@@ -327,6 +326,50 @@ public class Jeu {
 			System.out.println("Ce mot n'a pas encore été fait");
 		}
 		actionMenu(joueur, joueurAdv);
+	}
+	
+	/**
+	 * On fait un mot avec deux mots existants
+	 * @param joueur
+	 * @param joueurAdv
+	 */
+	public void faitUnMotAvecDeuxMot(Joueur joueur, Joueur joueurAdv) {
+		System.out.println("Quel est le premier mot à utiliser: ");
+		String premierMot = sc.next();
+		
+		if(joueur.getJoueurMots().contains(premierMot) || joueurAdv.getJoueurMots().contains(premierMot)) {
+			System.out.println("Quel est le deuxième mot à utiliser: ");
+			String deuxiemeMot = sc.next();
+			if(joueur.getJoueurMots().contains(deuxiemeMot) || joueurAdv.getJoueurMots().contains(deuxiemeMot)) {
+				String nouveauMot = premierMot.concat(deuxiemeMot);
+				if(dico.motExiste(nouveauMot)) {
+					removeUnMot(joueur, joueurAdv, premierMot);
+					removeUnMot(joueur, joueurAdv, deuxiemeMot);
+					joueur.getJoueurMots().add(nouveauMot);
+					testGagnant(joueur);
+					pioche();
+				}
+			} else {
+				System.out.println("Ce mot n'a pas encore été fait");
+			}
+		} else {
+			System.out.println("Ce mot n'a pas encore été fait");
+		}
+		actionMenu(joueur, joueurAdv);
+	}
+	
+	/**
+	 * Retire un mot déjà réaliser par un joueur
+	 * @param joueur
+	 * @param joueurAdv
+	 * @param mot
+	 */
+	public void removeUnMot(Joueur joueur, Joueur joueurAdv, String mot) {
+		if(joueur.getJoueurMots().contains(mot)) {
+			joueur.getJoueurMots().remove(mot);
+		} else {
+			joueurAdv.getJoueurMots().remove(mot);
+		}
 	}
 	
 	/**
