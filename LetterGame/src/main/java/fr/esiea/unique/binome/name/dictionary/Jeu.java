@@ -213,7 +213,7 @@ public class Jeu {
 	 * @param joueur
 	 * @param joueurAdv
 	 */
-	private void faitUnMotIA(Joueur joueur, Joueur joueurAdv) {
+	public void faitUnMotIA(Joueur joueur, Joueur joueurAdv) {
 
 		
 	}
@@ -223,7 +223,7 @@ public class Jeu {
 	 * @param joueur
 	 * @param joueurAdv
 	 */
-	private void motAvecUnMotIA(Joueur joueur, Joueur joueurAdv) {
+	public void motAvecUnMotIA(Joueur joueur, Joueur joueurAdv) {
 		
 	}
 	
@@ -232,7 +232,7 @@ public class Jeu {
 	 * @param joueur
 	 * @param joueurAdv
 	 */
-	private void motAvecDeuxMotsIA(Joueur joueur, Joueur joueurAdv) {
+	public void motAvecDeuxMotsIA(Joueur joueur, Joueur joueurAdv) {
 		
 	}
 	
