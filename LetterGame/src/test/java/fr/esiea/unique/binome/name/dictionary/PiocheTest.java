@@ -1,6 +1,7 @@
 package fr.esiea.unique.binome.name.dictionary;
 
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -25,6 +26,8 @@ public class PiocheTest {
 	
 	@Test
 	public void testLetterRandom() {
-		
+		String alphabet = "abcdefghijklmnopqrstuvwxyz";
+	    char c = pioche.letterRandom();
+	    assertNotEquals(alphabet.lastIndexOf(c), -1);
 	}
 }
