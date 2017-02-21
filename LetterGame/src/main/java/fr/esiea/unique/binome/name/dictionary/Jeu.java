@@ -207,6 +207,35 @@ public class Jeu {
 			}
 		}
 	}
+	/**
+	 * Permet à l'IA de trouver les mots qu'elle peut faire
+	 * @return la liste des mots possibles
+	 */
+	public ArrayList<String> motPossibleParIA() {
+		ArrayList<String> motDico = dico.getMotsDico();
+		ArrayList<String> motsPossible = new ArrayList<String>();
+		
+		for(int j = 0; j < motDico.size(); j++) {
+			String mot = motDico.get(j);
+			boolean possible = true;
+			if(mot.length() <= lettreSurTable.size()) {
+				int l = 0;
+				while(l < mot.length()) {
+					for(int k = 0; k < mot.length(); k++) {
+						char charMot = mot.charAt(k);
+						if(!lettreSurTable.contains(charMot)) {
+							possible = false;
+						}
+					}
+					l++;
+				}
+				if(possible) {
+					motsPossible.add(mot);
+				}
+			}
+		}
+		return(motsPossible);
+	}
 	
 	/**
 	 * L'IA fait un mot
@@ -214,9 +243,42 @@ public class Jeu {
 	 * @param joueurAdv
 	 */
 	public void faitUnMotIA(Joueur joueur, Joueur joueurAdv) {
-
-		
+		String meilleurMot = "";
+		ArrayList<String> listeDesMotsPossibles = motPossibleParIA();
+		for(int i = 0; i < listeDesMotsPossibles.size(); i++) {
+			String motPossible = listeDesMotsPossibles.get(i);
+			if(!estLeMeilleurMot(meilleurMot, motPossible)) {
+				meilleurMot = motPossible;
+				break;
+            }
+		}
+		if(meilleurMot != "") {
+			List<Character> lettreARemove = new ArrayList<Character>();
+			for(int k = 0; k < meilleurMot.length(); k++) {
+				lettreARemove.add(meilleurMot.charAt(k));
+			}
+			for(int j = 0; j < lettreARemove.size(); j++) {
+				lettreSurTable.remove(lettreARemove.get(j));
+			}
+			ia.getJoueurMots().add(meilleurMot);
+			testGagnant(joueur);
+			pioche(joueur);
+			actionIA(joueur, joueurAdv);
+		}
 	}
+	
+	/**
+	 * Trouve le meilleur mot à faire
+	 * @param meilleurMot
+	 * @param mot
+	 * @return
+	 */
+	private static boolean estLeMeilleurMot (String meilleurMot, String mot) {
+        if(meilleurMot.length() < mot.length()) {
+            return false;
+        }
+        return true;
+    }
 
 	/**
 	 * L'IA fait un mot avec un mot déjà fait
@@ -257,9 +319,14 @@ public class Jeu {
 	/**
 	 * On pioche une lettre
 	 */
-	public void pioche() {
+	public void pioche(Joueur joueur) {
 		char l1 = pioche.letterRandom();
-		System.out.println("Vous avez pioché un "+l1);
+		if(joueur.getIsIA()) {
+			System.out.println("L'IA a pioché un "+l1);
+		} else {
+			System.out.println("Vous avez pioché un "+l1);
+		}
+		
 		lettreSurTable.add(l1);
 	}
 	
@@ -275,7 +342,7 @@ public class Jeu {
 		if(dico.motExiste(mot) && motPossible(mot)){
 			joueur.setJoueurMots(mot);
 			testGagnant(joueur);
-			pioche();
+			pioche(joueur);
 		}
 		actionMenu(joueur, joueurAdv);
 	}
@@ -299,7 +366,6 @@ public class Jeu {
 				lettreARemove.add(charMot);
 			}
 		}
-		
 		if(bool) {
 			for (int j = 0; j < lettreARemove.size(); j++) {
 				lettreSurTable.remove(lettreARemove.get(j));
@@ -329,7 +395,7 @@ public class Jeu {
 				removeUnMot(joueur, joueurAdv, motACompleter);
 				joueur.getJoueurMots().add(nouveauMot);
 				testGagnant(joueur);
-				pioche();
+				pioche(joueur);
 			} else {
 				for(int i = 0; i < motACompleter.length(); i++) {
 					Character lettre = motACompleter.charAt(i);
@@ -362,7 +428,7 @@ public class Jeu {
 					removeUnMot(joueur, joueurAdv, deuxiemeMot);
 					joueur.getJoueurMots().add(nouveauMot);
 					testGagnant(joueur);
-					pioche();
+					pioche(joueur);
 				}
 			} else {
 				System.out.println("Ce mot n'a pas encore été fait");
