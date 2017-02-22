@@ -252,7 +252,7 @@ public class Jeu {
 				break;
             }
 		}
-		if(meilleurMot != "") {
+		if(meilleurMot != "" && motPossible(meilleurMot, joueur)) {
 			List<Character> lettreARemove = new ArrayList<Character>();
 			for(int k = 0; k < meilleurMot.length(); k++) {
 				lettreARemove.add(meilleurMot.charAt(k));
@@ -339,7 +339,7 @@ public class Jeu {
 		System.out.println("Entrez votre mot: ");
 		String mot = sc.next();
 		
-		if(dico.motExiste(mot) && motPossible(mot)){
+		if(dico.motExiste(mot) && motPossible(mot, joueur)){
 			joueur.setJoueurMots(mot);
 			testGagnant(joueur);
 			pioche(joueur);
@@ -352,17 +352,21 @@ public class Jeu {
 	 * @param mot
 	 * @return
 	 */
-	public boolean motPossible(String mot) {
+	public boolean motPossible(String mot, Joueur joueur) {
 		boolean bool = true;
 		List<Character> lettreARemove = new ArrayList<Character>();
+		List<Character> lettreSurTableTmp = lettreSurTable;
 		
 		for(int i = 0; i < mot.length(); i++) {
 			Character charMot = mot.charAt(i);
-			if(!lettreSurTable.contains(charMot)){
-				System.out.println("Vous pouvez pas faire ce mot avec les lettres disponibles");
+			if(!lettreSurTableTmp.contains(charMot)){
+			    if(!joueur.getIsIA()) {
+			        System.out.println("Vous pouvez pas faire ce mot avec les lettres disponibles");
+			    }
 				bool = false;
 				break;
 			} else {
+			    lettreSurTableTmp.remove(charMot);
 				lettreARemove.add(charMot);
 			}
 		}
@@ -391,7 +395,7 @@ public class Jeu {
 			System.out.println("Quel est votre nouveau mot?");
 			String nouveauMot = sc.next();
 			
-			if(nouveauMot.contains(motACompleter) && motPossible(nouveauMot)) {
+			if(nouveauMot.contains(motACompleter) && motPossible(nouveauMot, joueur)) {
 				removeUnMot(joueur, joueurAdv, motACompleter);
 				joueur.getJoueurMots().add(nouveauMot);
 				testGagnant(joueur);
