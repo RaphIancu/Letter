@@ -186,7 +186,7 @@ public class Jeu {
 	 * @param joueurAdv
 	 */
 	public void actionIA(Joueur joueur, Joueur joueurAdv) {
-		motAvecUnMotIA(joueur, joueurAdv);
+	    motAvecUnMotIA(joueur, joueurAdv);
 		if(aJouer) {
 			aJouer = false;
 			actionMenu(joueurAdv, joueur);
@@ -295,7 +295,25 @@ public class Jeu {
 	 * @param joueurAdv
 	 */
 	public void motAvecDeuxMotsIA(Joueur joueur, Joueur joueurAdv) {
-		
+		chercherUnMotAvecDeuxMotsIA(joueur, joueurAdv);
+		chercherUnMotAvecDeuxMotsIA(joueurAdv, joueur);
+	}
+	
+	/**
+	 * Permet à l'IA de trouver un mot avec deux mots
+	 * @param joueur
+	 * @param joueurAdv
+	 */
+	public void chercherUnMotAvecDeuxMotsIA(Joueur joueur, Joueur joueurAdv) {
+	    for(int i = 0; i < joueur.getJoueurMots().size(); i++) {
+            for(int j = 0; j < joueurAdv.getJoueurMots().size(); j++) {
+                if(dico.motExiste(joueur.getJoueurMots().get(i).concat(joueurAdv.getJoueurMots().get(j)))) {
+                    joueur.getJoueurMots().add(joueur.getJoueurMots().get(i).concat(joueurAdv.getJoueurMots().get(j)));
+                    joueur.getJoueurMots().remove(joueur.getJoueurMots().get(i));
+                    joueurAdv.getJoueurMots().remove(joueurAdv.getJoueurMots().get(j));
+                }
+            }
+        }
 	}
 	
 	/**
