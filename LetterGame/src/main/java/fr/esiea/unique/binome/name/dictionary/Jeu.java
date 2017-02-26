@@ -113,22 +113,6 @@ public class Jeu {
      * @param joueurAdv
      */
     public void runJeu(Joueur joueur, Joueur joueurAdv) {
-        joueur.getJoueurMots().add("test");
-        joueur.getJoueurMots().add("test");
-        joueur.getJoueurMots().add("test");
-        joueur.getJoueurMots().add("test");
-        joueur.getJoueurMots().add("test");
-        joueur.getJoueurMots().add("test");
-        joueur.getJoueurMots().add("test");
-        joueur.getJoueurMots().add("test");
-        joueur.getJoueurMots().add("test");
-        lettreSurTable.add('m');
-        lettreSurTable.add('a');
-        lettreSurTable.add('m');
-        lettreSurTable.add('a');
-        lettreSurTable.add('n');
-      
-        
     	if (joueur.getGagnant()) {
             System.out.println("Bravo vous avez fait 10 mots !");
             System.out.println(joueur.getPseudo() + " gagne ! \\o/");
@@ -299,7 +283,7 @@ public class Jeu {
      * @param mot
      * @return
      */
-    private static boolean estLeMeilleurMot(String meilleurMot, String mot) {
+    public boolean estLeMeilleurMot(String meilleurMot, String mot) {
         if (meilleurMot.length() < mot.length()) {
             return false;
         }
@@ -316,7 +300,7 @@ public class Jeu {
         List<String> motsPossibles = new ArrayList<>();
         String newMot = "";
         String oldMot = "";
-        for(int i = 0; i < joueur.getJoueurMots().size(); i++) {
+        for(int i = 0; i < joueur.getNbMot(); i++) {
            for(int j = 0; j < joueur.getJoueurMots().get(i).length(); j++) {
         	   lettreSurTable.add(joueur.getJoueurMots().get(i).charAt(j));
            }
@@ -367,8 +351,8 @@ public class Jeu {
      * @param joueurAdv
      */
     public void chercherUnMotAvecDeuxMotsIA(Joueur joueur, Joueur joueurAdv) {
-        for (int i = 0; i < joueur.getJoueurMots().size(); i++) {
-            for (int j = 0; j < joueurAdv.getJoueurMots().size(); j++) {
+        for (int i = 0; i < joueur.getNbMot(); i++) {
+            for (int j = 0; j < joueurAdv.getNbMot(); j++) {
                 if (dico.motExiste(joueur.getJoueurMots().get(i).concat(joueurAdv.getJoueurMots().get(j)))) {
                     joueur.getJoueurMots().add(joueur.getJoueurMots().get(i).concat(joueurAdv.getJoueurMots().get(j)));
                     System.out.println("L'IA a fait ["+joueur.getJoueurMots().get(i).concat(joueurAdv.getJoueurMots().get(j))+"] avec les deux mots "+joueur.getJoueurMots().get(i)+" - "+joueurAdv.getJoueurMots().get(j));
@@ -563,7 +547,7 @@ public class Jeu {
      * @param joueur
      */
     public void testGagnant(Joueur joueur) {
-        if (joueur.getJoueurMots().size() >= 10) {
+        if (joueur.getNbMot() >= 10) {
             joueur.setGagnant(true);
         }
     }
