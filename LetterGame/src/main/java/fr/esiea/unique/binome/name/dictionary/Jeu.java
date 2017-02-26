@@ -113,7 +113,23 @@ public class Jeu {
      * @param joueurAdv
      */
     public void runJeu(Joueur joueur, Joueur joueurAdv) {
-        if (joueur.getGagnant()) {
+        joueur.getJoueurMots().add("test");
+        joueur.getJoueurMots().add("test");
+        joueur.getJoueurMots().add("test");
+        joueur.getJoueurMots().add("test");
+        joueur.getJoueurMots().add("test");
+        joueur.getJoueurMots().add("test");
+        joueur.getJoueurMots().add("test");
+        joueur.getJoueurMots().add("test");
+        joueur.getJoueurMots().add("test");
+        lettreSurTable.add('m');
+        lettreSurTable.add('a');
+        lettreSurTable.add('m');
+        lettreSurTable.add('a');
+        lettreSurTable.add('n');
+      
+        
+    	if (joueur.getGagnant()) {
             System.out.println("Bravo vous avez fait 10 mots !");
             System.out.println(joueur.getPseudo() + " gagne ! \\o/");
             System.exit(0);
@@ -272,7 +288,7 @@ public class Jeu {
             testGagnant(joueur);
             pioche(joueur);
             aJouer = false;
-            actionIA(joueur, joueurAdv);
+            actionMenu(joueur, joueurAdv);
         }
     }
 
@@ -297,40 +313,36 @@ public class Jeu {
      * @param joueurAdv
      */
     public void motAvecUnMotIA(Joueur joueur, Joueur joueurAdv) {
-        List<String> test = new ArrayList<>();
-        List<Character> LettreSurTableTmp = lettreSurTable;
-        System.out.println(LettreSurTableTmp);
+        List<String> motsPossibles = new ArrayList<>();
         String newMot = "";
         String oldMot = "";
         for(int i = 0; i < joueur.getJoueurMots().size(); i++) {
            for(int j = 0; j < joueur.getJoueurMots().get(i).length(); j++) {
-               LettreSurTableTmp.add(joueur.getJoueurMots().get(i).charAt(j));
+        	   lettreSurTable.add(joueur.getJoueurMots().get(i).charAt(j));
            }
-           System.out.println(LettreSurTableTmp);
-           test = motPossibleParIA();
-           for(int k = 0; k < test.size(); k++) {
-               if(test.get(k).contains(joueur.getJoueurMots().get(i)) && !test.get(k).equals(joueur.getJoueurMots().get(i))) {
-                   newMot = test.get(k);
+           motsPossibles = motPossibleParIA();
+           for(int k = 0; k < motsPossibles.size(); k++) {
+               if(motsPossibles.get(k).contains(joueur.getJoueurMots().get(i)) && !motsPossibles.get(k).equals(joueur.getJoueurMots().get(i)) && motPossible(motsPossibles.get(k), joueur)) {
+                   newMot = motsPossibles.get(k);
                    oldMot = joueur.getJoueurMots().get(i);
                    aJouer = true;
                }
            }
            if(newMot != "") {
         	   for(int l = 0; l < newMot.length(); l++) { 
-        		   LettreSurTableTmp.remove((Character) newMot.charAt(l));
+        		   lettreSurTable.remove((Character) newMot.charAt(l));
                }
            } else {
         	   for(int l = 0; l < joueur.getJoueurMots().get(i).length(); l++) {
-        		   LettreSurTableTmp.remove((Character) joueur.getJoueurMots().get(i).charAt(l));
+        		   lettreSurTable.remove((Character) joueur.getJoueurMots().get(i).charAt(l));
         	   }
            }
-           System.out.println(LettreSurTableTmp);
        }
-       System.out.println(LettreSurTableTmp);
        if(aJouer) {
            joueur.getJoueurMots().add(newMot);
            joueur.getJoueurMots().remove(oldMot);
-           actionIA(joueur, joueurAdv);
+           System.out.println("L'IA a fait ["+newMot+"] avec "+oldMot);
+           actionMenu(joueur, joueurAdv);
        }
     }
     
@@ -344,7 +356,7 @@ public class Jeu {
         chercherUnMotAvecDeuxMotsIA(joueur, joueurAdv);
         chercherUnMotAvecDeuxMotsIA(joueurAdv, joueur);
         if(aJouer) {
-            actionIA(joueur, joueurAdv);
+            actionMenu(joueur, joueurAdv);
         }
     }
 
