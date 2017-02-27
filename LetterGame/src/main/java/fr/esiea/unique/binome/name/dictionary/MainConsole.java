@@ -7,6 +7,11 @@ package fr.esiea.unique.binome.name.dictionary;
  */
 
 public class MainConsole {
+	
+	/**
+	 * Méthode Main qui lance le jeu
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		Jeu jeu = new Jeu();
 		jeu.initJeu();

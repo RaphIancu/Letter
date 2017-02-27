@@ -24,6 +24,11 @@ public class Dico {
 		this.path = path;
 	}
 	
+	/**
+	 * Permet de savoir si ce mot est dans le dico
+	 * @param mot
+	 * @return
+	 */
 	public boolean motExiste(String mot) {
 		try {
 			File f = new File(path); 
@@ -43,7 +48,11 @@ public class Dico {
 		System.out.println("Le mot "+mot +" n'est pas dans le dictionnaire");
 		return false;
 	}
-
+	
+	/**
+	 * Récupère les mots du dico
+	 * @return
+	 */
 	public ArrayList<String> getMotsDico() {
 		File f = new File(path); 
 		BufferedReader bfReader;
