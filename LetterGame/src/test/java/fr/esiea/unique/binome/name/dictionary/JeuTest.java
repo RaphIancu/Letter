@@ -6,6 +6,8 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.text.AbstractDocument.LeafElement;
+
 import static org.junit.Assert.assertFalse;
 
 import org.junit.Test;
@@ -54,9 +56,9 @@ public class JeuTest {
 		String mot = "test";
 		if (jeu.motPossible(mot, j1)) {
 			j1.setJoueurMots(mot);
-			assertTrue(j1.getNbMot() == 1);
+			assertTrue(j1.getJoueurMots().size() == 1);
 		} else {
-			assertFalse(j1.getNbMot() == 1);
+			assertFalse(j1.getJoueurMots().size() == 1);
 		}
 	}
 
@@ -92,8 +94,8 @@ public class JeuTest {
 		j1.setJoueurMots("aber");
 		j2.setJoueurMots("ration");
 		String mot = "";
-		for (int i = 0; i < j1.getNbMot(); i++) {
-			for (int j = 0; j < j2.getNbMot(); j++) {
+		for (int i = 0; i < j1.getJoueurMots().size(); i++) {
+			for (int j = 0; j < j2.getJoueurMots().size(); j++) {
 				mot = j1.getJoueurMots().get(i).concat(j2.getJoueurMots().get(j));
 				if (dico.motExiste(mot)) {
 					j1.getJoueurMots().remove(j1.getJoueurMots().get(i));
@@ -109,7 +111,7 @@ public class JeuTest {
 	public void testRemoveUnMot() {
 		j1.getJoueurMots().add("test");
 		jeu.removeUnMot(j1, j2, "test");
-		assertTrue(j1.getNbMot() == 0);
+		assertTrue(j1.getJoueurMots().size() == 0);
 	}
 
 	@Test
@@ -159,9 +161,25 @@ public class JeuTest {
 		j1.setJoueurMots("test");
 		jeu.getLettreSurTable().add('a');
 		jeu.getLettreSurTable().add('m');
-		for (int i = 0; i < j1.getNbMot(); i++) {
-			//TODO
+		for (int i = 0; i < j1.getJoueurMots().size(); i++) {
+			String oldMot = j1.getJoueurMots().get(i);
+			for(int j = 0; j < oldMot.length(); j++) {
+				jeu.getLettreSurTable().add(oldMot.charAt(j));
+			}
+			List<String> newMots = jeu.motPossibleParIA();
+			for(int k = 0; k < jeu.motPossibleParIA().size(); k++) {
+				String newMot = newMots.get(k);
+				if(newMot.contains(oldMot) && !newMot.equals(oldMot)) {
+					j1.getJoueurMots().remove(oldMot);
+					j1.getJoueurMots().add(newMot);
+					for(int j = 0; j < newMot.length(); j++) {
+						jeu.getLettreSurTable().remove((Character) newMot.charAt(j));
+					}
+				}
+			}
 		}
+		assertTrue(j1.getJoueurMots().size() == 2);
+		assertTrue(j1.getJoueurMots().contains("maman"));
 	}
 
 	@Test
@@ -169,8 +187,8 @@ public class JeuTest {
 		j1.setJoueurMots("aber");
 		j2.setJoueurMots("ration");
 		String mot = "";
-		for (int i = 0; i < j1.getNbMot(); i++) {
-			for (int j = 0; j < j2.getNbMot(); j++) {
+		for (int i = 0; i < j1.getJoueurMots().size(); i++) {
+			for (int j = 0; j < j2.getJoueurMots().size(); j++) {
 				mot = j1.getJoueurMots().get(i).concat(j2.getJoueurMots().get(j));
 				if (dico.motExiste(mot)) {
 					j1.getJoueurMots().remove(j1.getJoueurMots().get(i));
