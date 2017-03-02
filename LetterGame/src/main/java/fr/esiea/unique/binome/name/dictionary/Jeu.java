@@ -327,9 +327,11 @@ public class Jeu {
 		if (aJouer) {
 			joueur.getJoueurMots().add(newMot);
 			joueur.getJoueurMots().remove(oldMot);
-			testGagnant(joueur);
 			System.out.println("L'IA a fait [" + newMot + "] avec " + oldMot);
-			actionMenu(joueur, joueurAdv);
+			testGagnant(joueur);
+			pioche(joueur);
+            aJouer = false;
+            actionMenu(joueur, joueurAdv);
 		}
 	}
 
@@ -344,7 +346,9 @@ public class Jeu {
 		chercherUnMotAvecDeuxMotsIA(joueurAdv, joueur);
 		if (aJouer) {
 			testGagnant(joueur);
-			actionMenu(joueur, joueurAdv);
+            pioche(joueur);
+            aJouer = false;
+            actionMenu(joueur, joueurAdv);
 		}
 	}
 
