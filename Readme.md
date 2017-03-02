@@ -45,3 +45,8 @@ Puis exécuter cette commande où se trouve le pom.xml:
 ```
 mvn exec:java -Dexec.mainClass="fr.esiea.unique.binome.name.dictionary.MainConsole"
 ```
+
+## Commentaires
+Nous avons été deux à travailler sur le projet mais github n'affiche qu'un seul contributeur malgré que ce soit Florent Coulon qui ai fait certains push.
+Ci-dessous un lien avec une capture d'écran montrant ces push:
+[http://imgur.com/D8kmKsp](http://imgur.com/D8kmKsp)
