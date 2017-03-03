@@ -1,6 +1,6 @@
 # Projet Architecture Logicielle - LetterGame - 03-03-2017
 
-Bienvenue sur le dépôt du groupe `IANCU Raphaël` et `COULON Florent`.
+Bienvenue sur le dépôt du groupe `IANCU Raphaël` et `COULON Florent` - `4A-UFA`.
 
 
 ## Projet réalisé
