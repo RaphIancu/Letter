@@ -44,7 +44,7 @@ Cette classe nous permet de savoir si un mot existe ou non dans le dictionnaire.
 
 Cette classe nous permet de lancer le jeu grâce à la méthode main().
 
-Nous avons utilisé le CMD Findbugs et avons fait en sorte qu'il y ai le moins d'avertissements possibles (2 warnings en tout, hors classe dictionnary qui était fournise et qu'il n'a pas été utilisée).
+Nous avons utilisé Findbugs et avons fait en sorte qu'il y ai le moins d'avertissements possibles (2 warnings en tout, hors classe dictionnary qui était fournise et qu'il n'a pas été utilisée).
 
 ## Fonctionnement de l'IA
 Il est possible de jouer et peut être de gagner contre notre IA. A chacun de ses tours, l'IA teste si elle peut faire un mot avec les lettres du pot commun, avec un autre mot (uniquement les siens pour laisser une chance au joueur de gagner) ou avec deux mots.
